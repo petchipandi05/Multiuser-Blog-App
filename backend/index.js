@@ -30,10 +30,17 @@ const allowedOrigins = [
   "http://localhost:5173",    // for local React testing
   "https://multiuser-blog-app2.onrender.com", // deployed frontend
 ];
+
 app.use(
   cors({
-    origin: allowedOrigin,     // ✅ your frontend URL
-    credentials: true,         // ✅ allow cookies/auth headers
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
 
