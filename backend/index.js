@@ -26,10 +26,7 @@ const connectDB=async()=>{
 dotenv.config()
 app.use(express.json())
 app.use("/images",express.static(path.join(__dirname,"/images")))
-app.use(cors({
-  origin: "http://localhost:5174",  // ✅ frontend origin
-  credentials: true                 // ✅ allow cookies/auth headers
-}));
+app.use(cors({ origin: "*" }));
 app.use(cookieParser())
 app.use("/api/auth",authRoute)
 app.use("/api/users",userRoute)
