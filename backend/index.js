@@ -26,7 +26,14 @@ const connectDB=async()=>{
 dotenv.config()
 app.use(express.json())
 app.use("/images",express.static(path.join(__dirname,"/images")))
-app.use(cors({ origin: "*" }));
+const allowedOrigin = "https://multiuser-blog-app2.onrender.com";
+app.use(
+  cors({
+    origin: allowedOrigin,   // 👈 No '*'
+    credentials: true,       // 👈 Required for cookies or auth headers
+  })
+);
+
 app.use(cookieParser())
 app.use("/api/auth",authRoute)
 app.use("/api/users",userRoute)
